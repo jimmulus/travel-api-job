@@ -13,7 +13,7 @@ return new class () extends Migration {
         Schema::create('travel', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->boolean('is_public');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('name');
             $table->string('description');
             $table->integer('number_of_days');
