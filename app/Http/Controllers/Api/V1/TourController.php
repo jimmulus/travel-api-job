@@ -3,27 +3,36 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ToursListRequest;
 use App\Http\Resources\TourResource;
-use App\Models\Tour;
 use App\Models\Travel;
-use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Pipeline\Pipeline;
 
 class TourController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function __invoke(Travel $travel)
+    public function __invoke(Travel $travel, ToursListRequest $request)
     {
         if(!$travel->is_public) {
             abort(404);
         }
 
-        $tours = $travel->tours()
-            ->orderBy('starting_date')
-            ->paginate();
-
-        return TourResource::collection($tours);
+        if($request) {
+            $tours = app(Pipeline::class)
+                ->send($travel->tours()->getQuery())
+                ->through([
+                    \App\Filters\PriceFrom::class,
+                    \App\Filters\PriceTo::class,
+                    \App\Filters\DateFrom::class,
+                    \App\Filters\DateTo::class,
+                    \App\Filters\SortBy::class,
+                ])
+                ->thenReturn()
+                ->orderBy('starting_date')
+                ->paginate();
+            return TourResource::collection($tours);
+        }
     }
 }

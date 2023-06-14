@@ -16,12 +16,13 @@ class TourFactory extends Factory
      */
     public function definition(): array
     {
-        $date = now()->addDays(rand(31, 150));
+        $start = now()->addDays(rand(31, 150));
+        $end = (clone $start)->addDays(rand(5, 21));
 
         return [
             'name' => fake()->name,
-            'starting_date' => $date,
-            'ending_date' => $date->addDays(rand(5, 21)),
+            'starting_date' => $start,
+            'ending_date' => $end,
             'price' => fake()->randomFloat(2, 600, 3999),
         ];
     }

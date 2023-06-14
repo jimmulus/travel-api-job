@@ -15,6 +15,7 @@ class TourResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'starting_date' => \Carbon\Carbon::make($this->starting_date)->format('Y-m-d'),
             'ending_date' => \Carbon\Carbon::make($this->ending_date)->format('Y-m-d'),
