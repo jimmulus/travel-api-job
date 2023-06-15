@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -26,6 +25,7 @@ class LoginController extends Controller
     public function destroy(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
+
         return response()->json(['message' => 'Logged out.'], 422);
     }
 }

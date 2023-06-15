@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ToursListRequest;
 use App\Http\Resources\TourResource;
 use App\Models\Travel;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Pipeline\Pipeline;
 
 class TourController extends Controller
@@ -13,7 +14,7 @@ class TourController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __invoke(Travel $travel, ToursListRequest $request)
+    public function __invoke(Travel $travel, ToursListRequest $request): AnonymousResourceCollection
     {
         if(!$travel->is_public) {
             abort(404);
