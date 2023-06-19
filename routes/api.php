@@ -31,6 +31,14 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:sanctum')->post('/logout', [LoginController::class, 'destroy']);
 });
 
-Route::prefix('admin')->middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::post('/travels', [Admin\TravelController::class, 'store']);
+Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/travels', [Admin\TravelController::class, 'store']);
+        Route::post('/travels/{travel:slug}/tours', [Admin\TourController::class, 'store']);
+        Route::get('/tours', [Admin\TourController::class, 'index']);
+    });
+    Route::middleware('role:editor')->group(function () {
+        Route::put('/travels/{travel:slug}', [Admin\TourController::class, 'store']);
+        Route::get('/travels', [Admin\TravelController::class, 'index']);
+    });
 });

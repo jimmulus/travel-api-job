@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
@@ -19,10 +20,29 @@ class RoleMiddleware
             abort(401);
         }
 
-        if (! auth()->user()->roles()->where('name', $role)->exists()) {
+        try {
+            switch ($role) {
+                case 'admin' :
+                    if (! auth()->user()->roles()->where('name', 'admin')->exists()) {
+                        abort(403, 'Not authorized');
+                    }
+                    return $next($request);
+                    break;
+                case 'editor' :
+                    if (! auth()->user()->isEditor()) {
+                        abort(403, 'Not authorized');
+                    }
+                    return $next($request);
+                    break;
+                default : abort(403, 'Not authorized');
+            };
+
+        } catch (\Exception $e) {
+            Log::error($e);
             abort(403);
         }
-
         return $next($request);
+
+
     }
 }
