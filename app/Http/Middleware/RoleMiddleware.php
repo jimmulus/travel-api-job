@@ -16,33 +16,35 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if(! auth()->check()) {
+        if (! auth()->check()) {
             abort(401);
         }
 
         try {
             switch ($role) {
-                case 'admin' :
+                case 'admin':
                     if (! auth()->user()->roles()->where('name', 'admin')->exists()) {
                         abort(403, 'Not authorized');
                     }
+
                     return $next($request);
                     break;
-                case 'editor' :
+                case 'editor':
                     if (! auth()->user()->isEditor()) {
                         abort(403, 'Not authorized');
                     }
+
                     return $next($request);
                     break;
-                default : abort(403, 'Not authorized');
-            };
+                default: abort(403, 'Not authorized');
+            }
 
         } catch (\Exception $e) {
             Log::error($e);
             abort(403);
         }
-        return $next($request);
 
+        return $next($request);
 
     }
 }

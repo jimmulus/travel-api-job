@@ -14,7 +14,7 @@ class LoginController extends Controller
     public function store(LoginRequest $request): JsonResponse
     {
         $user = User::where('email', $request->email)->first();
-        if(!$user || ! Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'The credentials are incorrect.'], 422);
         }
         $device = substr($request->userAgent() ?? '', 0, 255);

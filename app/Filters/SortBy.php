@@ -13,7 +13,7 @@ class SortBy
 
     public function handle($query, Closure $next)
     {
-        if (!$this->request->sortBy) {
+        if (! $this->request->sortBy) {
             return $next($query);
         }
 

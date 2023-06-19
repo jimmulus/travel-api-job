@@ -16,11 +16,11 @@ class TourController extends Controller
      */
     public function __invoke(Travel $travel, ToursListRequest $request): AnonymousResourceCollection
     {
-        if(!$travel->is_public) {
+        if (! $travel->is_public) {
             abort(404);
         }
 
-        if($request) {
+        if ($request) {
             $tours = app(Pipeline::class)
                 ->send($travel->tours()->getQuery())
                 ->through([
@@ -33,6 +33,7 @@ class TourController extends Controller
                 ->thenReturn()
                 ->orderBy('starting_date')
                 ->paginate();
+
             return TourResource::collection($tours);
         }
     }

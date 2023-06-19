@@ -14,7 +14,7 @@ class PriceFrom
     public function handle($query, Closure $next)
     {
 
-        if (!$this->request->priceFrom) {
+        if (! $this->request->priceFrom) {
             return $next($query);
         }
 

@@ -39,5 +39,4 @@ class ToursListRequest extends FormRequest
             'sortOrder' => "'sortOrder' only accepts 'asc' or 'desc' as value",
         ];
     }
-
 }

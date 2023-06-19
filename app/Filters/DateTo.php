@@ -13,7 +13,7 @@ class DateTo
 
     public function handle($query, Closure $next)
     {
-        if (!$this->request->dateTo) {
+        if (! $this->request->dateTo) {
             return $next($query);
         }
 

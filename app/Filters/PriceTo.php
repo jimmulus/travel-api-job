@@ -13,7 +13,7 @@ class PriceTo
 
     public function handle($query, Closure $next)
     {
-        if (!$this->request->priceTo) {
+        if (! $this->request->priceTo) {
             return $next($query);
         }
 

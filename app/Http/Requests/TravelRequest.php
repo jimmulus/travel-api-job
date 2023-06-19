@@ -22,7 +22,7 @@ class TravelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'is_public' => ['required','boolean',],
+            'is_public' => ['required', 'boolean'],
             'name' => ['required', 'string', 'unique:travel', 'max:255'],
             'description' => ['required', 'string'],
             'number_of_days' => ['required', 'numeric'],

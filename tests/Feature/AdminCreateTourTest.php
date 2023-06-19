@@ -37,7 +37,7 @@ class AdminCreateTourTest extends TestCase
         $user = User::factory()->create();
         $user->roles()
             ->attach(Role::where('name', 'editor')
-            ->value('id'));
+                ->value('id'));
 
         $travel = Travel::factory()->create();
 
@@ -57,7 +57,7 @@ class AdminCreateTourTest extends TestCase
         $user = User::factory()->create();
         $user->roles()
             ->attach(Role::where('name', 'admin')
-            ->value('id'));
+                ->value('id'));
 
         $travel = Travel::factory()->create();
 
@@ -66,17 +66,16 @@ class AdminCreateTourTest extends TestCase
             ->post('/api/v1/admin/travels/'.$travel->slug.'/tours', ['name' => 'Tour']);
         $response->assertStatus(422);
 
-        $response =$this->actingAs($user)
+        $response = $this->actingAs($user)
             ->withHeaders(['Accept' => 'application/json'])
             ->post('/api/v1/admin/travels/'.$travel->slug.'/tours', [
                 'name' => 'Tour',
                 'starting_date' => '2023-07-21',
                 'ending_date' => '2023-07-21',
-                'price' => 1478.33
+                'price' => 1478.33,
             ]);
         $response->assertStatus(201);
     }
-
 
     /**
      * test
@@ -88,7 +87,7 @@ class AdminCreateTourTest extends TestCase
         $user = User::factory()->create();
         $user->roles()
             ->attach(Role::where('name', 'admin')
-            ->value('id'));
+                ->value('id'));
 
         $travel = Travel::factory()->create();
         Tour::factory(31)->create(['travel_id' => $travel->id]);

@@ -59,6 +59,7 @@ class CreateUser extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return 422;
         }
         $validated = $validator->validated();

@@ -13,7 +13,7 @@ class DateFrom
 
     public function handle($query, Closure $next)
     {
-        if (!$this->request->dateFrom) {
+        if (! $this->request->dateFrom) {
             return $next($query);
         }
 
