@@ -20,21 +20,19 @@ class TourController extends Controller
             abort(404);
         }
 
-        if ($request) {
-            $tours = app(Pipeline::class)
-                ->send($travel->tours()->getQuery())
-                ->through([
-                    \App\Filters\PriceFrom::class,
-                    \App\Filters\PriceTo::class,
-                    \App\Filters\DateFrom::class,
-                    \App\Filters\DateTo::class,
-                    \App\Filters\SortBy::class,
-                ])
-                ->thenReturn()
-                ->orderBy('starting_date')
-                ->paginate();
+        $tours = app(Pipeline::class)
+            ->send($travel->tours()->getQuery())
+            ->through([
+                \App\Filters\PriceFrom::class,
+                \App\Filters\PriceTo::class,
+                \App\Filters\DateFrom::class,
+                \App\Filters\DateTo::class,
+                \App\Filters\SortBy::class,
+            ])
+            ->thenReturn()
+            ->orderBy('starting_date')
+            ->paginate();
 
-            return TourResource::collection($tours);
-        }
+        return TourResource::collection($tours);
     }
 }

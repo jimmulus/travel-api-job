@@ -28,9 +28,11 @@ class Handler extends ExceptionHandler
 
             if ($request->is('api/*')) {
                 $message = match ($e->getStatusCode()) {
+                    400 => 'Bad request',
                     401 => 'Forbidden',
                     403 => 'Unauthorized',
                     404 => 'Not found',
+                    default => 'Error occured'
                 };
 
                 return response()->json([

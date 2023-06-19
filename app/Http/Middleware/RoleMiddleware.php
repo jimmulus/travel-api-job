@@ -28,23 +28,17 @@ class RoleMiddleware
                     }
 
                     return $next($request);
-                    break;
                 case 'editor':
                     if (! auth()->user()->isEditor()) {
                         abort(403, 'Not authorized');
                     }
 
                     return $next($request);
-                    break;
                 default: abort(403, 'Not authorized');
             }
-
         } catch (\Exception $e) {
             Log::error($e);
             abort(403);
         }
-
-        return $next($request);
-
     }
 }

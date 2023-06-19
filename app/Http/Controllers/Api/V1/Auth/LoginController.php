@@ -24,7 +24,10 @@ class LoginController extends Controller
 
     public function destroy(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+
+        /** @var \Laravel\Sanctum\PersonalAccessToken $token */
+        $token = $request()->user()->currentAccessToken();
+        $token->delete();
 
         return response()->json(['message' => 'Logged out.'], 422);
     }
