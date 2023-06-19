@@ -26,7 +26,7 @@ class LoginController extends Controller
     {
 
         /** @var \Laravel\Sanctum\PersonalAccessToken $token */
-        $token = $request()->user()->currentAccessToken();
+        $token = $request->user()->currentAccessToken();
         $token->delete();
 
         return response()->json(['message' => 'Logged out.'], 422);

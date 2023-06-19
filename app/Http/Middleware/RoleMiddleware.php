@@ -21,15 +21,19 @@ class RoleMiddleware
         }
 
         try {
+
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+
             switch ($role) {
                 case 'admin':
-                    if (! auth()->user()->roles()->where('name', 'admin')->exists()) {
+                    if (! $user->roles()->where('name', 'admin')->exists()) {
                         abort(403, 'Not authorized');
                     }
 
                     return $next($request);
                 case 'editor':
-                    if (! auth()->user()->isEditor()) {
+                    if (! $user->isEditor()) {
                         abort(403, 'Not authorized');
                     }
 

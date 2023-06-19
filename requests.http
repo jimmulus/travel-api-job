@@ -1,0 +1,131 @@
+@url = {{$dotenv APP_URL}}
+@access_token = {{ login.response.body.$.access_token }}
+
+# @name CSRF
+GET {{url}}/sanctum/csrf-cookie HTTP/1.1
+Accept: application/json
+
+###
+
+
+#ADMIN
+# @name login
+POST {{url}}/api/v1/auth/login HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "admin@travel.com",
+    "password": "password"
+}
+
+###
+
+#EDITOR
+# @name login
+POST {{url}}/api/v1/auth/login HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "editor@travel.com",
+    "password": "password"
+}
+
+###
+
+#User
+# @name login
+POST {{url}}/api/v1/auth/login HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "user@travel.com",
+    "password": "password"
+}
+
+###
+
+# @name Logout
+POST {{url}}/api/v1/auth/logout HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name AdminTravelList
+GET {{url}}/api/v1/admin/travels HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name AdminToursList
+GET {{url}}/api/v1/admin/tours HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# @name AdminTravelCreate
+POST {{url}}/api/v1/admin/travels HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "name": "New Travel",
+    "description": "Newly generated Travel",
+    "is_public": true,
+    "number_of_days": 18
+}
+
+###
+
+# @name EditorTravelUpdate
+PUT {{url}}/api/v1/admin/travels/new-travel HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "name": "New Travel",
+    "description": "Updated generated Travel",
+    "is_public": false,
+    "number_of_days": 18
+}
+
+###
+
+# @name AdminTourCreate
+POST {{url}}/api/v1/admin/travels/travel-1/tours HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "name": "New Tour",
+    "starting_date": "2023-11-03",
+    "ending_date": "2023-11-21",
+    "price": 1899.24
+}
+
+###
+
+# @name PublicTravelList
+GET {{url}}/api/v1/travels HTTP/1.1
+Accept: application/json
+
+###
+
+# @name PublicTravelToursList###
+GET {{url}}/api/v1/travels/travel-2/tours HTTP/1.1
+Accept: application/json
+
+###
+
+# @name PublicTravelToursListFiltered###
+GET http://127.0.0.1:8000/api/v1/travels/travel-1/tours?priceFrom=300&priceTo=2500&sortBy=price&&sortOrder=desc HTTP/1.1
+Accept: application/json

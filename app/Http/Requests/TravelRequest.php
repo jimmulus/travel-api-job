@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TravelRequest extends FormRequest
 {
@@ -21,9 +22,14 @@ class TravelRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'is_public' => ['required', 'boolean'],
-            'name' => ['required', 'string', 'unique:travel', 'max:255'],
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('travel')->ignore($this->travel),
+                'max:255'],
             'description' => ['required', 'string'],
             'number_of_days' => ['required', 'numeric'],
         ];

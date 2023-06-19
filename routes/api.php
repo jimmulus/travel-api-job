@@ -37,7 +37,7 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
         Route::get('/tours', [Admin\TourController::class, 'index']);
     });
     Route::middleware('role:editor')->group(function () {
-        Route::put('/travels/{travel:slug}', [Admin\TourController::class, 'store']);
+        Route::put('/travels/{travel:slug}', [Admin\TravelController::class, 'update']);
         Route::get('/travels', [Admin\TravelController::class, 'index']);
     });
 });
