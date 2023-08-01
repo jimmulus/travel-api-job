@@ -12,7 +12,7 @@ class TravelController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return TravelResource::collection(Travel::all());
+        return TravelResource::collection(Travel::paginate());
     }
 
     public function store(TravelRequest $request): TravelResource

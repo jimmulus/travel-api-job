@@ -80,7 +80,7 @@ class AdminCreateTourTest extends TestCase
     /**
      * test
      */
-    public function test_logged_in_user_can_get_list_of_tours_of_single_travel(): void
+    public function test_logged_in_admin_user_can_get_list_of_tours_of_single_travel(): void
     {
         $this->seed(RoleSeeder::class);
 
@@ -97,7 +97,7 @@ class AdminCreateTourTest extends TestCase
             ->get('/api/v1/admin/travels/'.$travel->slug.'/tours');
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');
-        $response->assertJsonPath('meta.last_page', 2);
+        $response->assertJsonPath('meta.last_page', 3);
 
     }
 }

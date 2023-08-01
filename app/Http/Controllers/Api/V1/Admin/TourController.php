@@ -13,7 +13,7 @@ class TourController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return TourResource::collection(Tour::all());
+        return TourResource::collection(Tour::paginate());
     }
 
     public function store(Travel $travel, TourRequest $request): TourResource
