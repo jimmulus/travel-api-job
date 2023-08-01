@@ -19,6 +19,12 @@ An API for a travel with multiple tours. Endpoints for admin, editor and public.
 * View a total travel list
 * Update a travel
 
+**Create new user artisan command**
+
+    php artisan user:create
+
+
+
 ## Installation after clone
 
 
@@ -67,7 +73,7 @@ if APP_ENV=local dummy data will be seeded: users, travel and tours
 
 
 
-**All endpoint example calls are summorized in [requests.http](./requests.http)''**
+**All endpoint example calls are summorized in [requests.http](./requests.http)**
 
 
 ## Original job Description

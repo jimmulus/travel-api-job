@@ -41,7 +41,7 @@ class CreateUser extends Command
         $name = $this->ask('Fill in the user name');
         $email = $this->ask('Fill in the user email');
         $password = $this->secret('Fill in a user password with a minimum of 8 characters');
-        $password_confirmation = $this->secret('Repeate the password');
+        $password_confirmation = $this->secret('Repeat the password');
         $validator = Validator::make([
             'name' => $name,
             'email' => $email,
